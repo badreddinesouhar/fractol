@@ -46,7 +46,7 @@ static void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 void mandelbrot(t_mlx *mlx){
 	double z_re, z_img, c_re, c_img, all, x, y;
 	int i;
-	int max_iterations = 150;
+	int max_iterations = 1500;
 	x = 0;
 	t_data data;
 	data = ft_mlx_init_fractol(mlx);
@@ -76,21 +76,25 @@ void mandelbrot(t_mlx *mlx){
 				all = z_re * z_re +z_img * z_img;
 				i++;
 			}
-			double color = i % 16 * 0xE12700 + i % 16 * 0xC7D0D1+ i % 16 * 0x484848 ;
-			// double color2 = i % 16 * 0x000000+ i % 16 * 0x7B8181+ i % 16 * 0xF9FEFF;
+			// double color = i % 16 * 0xE12700 + i % 16 * 0xC7D0D1+ i % 16 * 0x484848 ;
+			// // double color2 = i % 16 * 0x000000+ i % 16 * 0x7B8181+ i % 16 * 0xF9FEFF;
 		   	
-			if(i < 5)
-				my_mlx_pixel_put(&data, x, y, 0x000000);
-			if(i < 15)
-				my_mlx_pixel_put(&data, x, y, color);
-			else if (i < 50)
-				my_mlx_pixel_put(&data, x, y, 0xFFFFFF);
+			// if(i < 5)
+			// 	my_mlx_pixel_put(&data, x, y, 0x000000);
+			// if(i < 15)
+			// 	my_mlx_pixel_put(&data, x, y, color);
+			// else if (i < 50)
+				// my_mlx_pixel_put(&data, x, y, 0xFFFFFF);
+			double color  = i % 16 * 0x000000 + i % 16 * 0xECEEF1 + i % 16 * 0x242322;
+            if (i == max_iterations)
+                my_mlx_pixel_put(&data, x, y, 0x000000);
+            else
+                my_mlx_pixel_put(&data, x, y, color);
 			y++;			
 		}
 		x++;
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
-	
 }
 
 static t_data ft_mlx_init_fractol(t_mlx *mlx)

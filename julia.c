@@ -16,27 +16,18 @@
 #define H 1000
 
 
-// typedef struct s_mlx
-// {
-// 	void *ptr;
-// 	void *win;
-// 	void *img;
-// 	int width;
-// 	int height;
-// 	int color;
-// 	double c_img;
-// 	double c_re;
-// } t_mlx;
-
-// typedef struct s_data
-// {
-// 	char *addr;
-// 	int bits_per_pixel;
-// 	int line_length;
-// 	int endian;
-// } t_data;
-
 static t_data ft_mlx_init_fractol(t_mlx *mlx);
+
+// int	key_handler(int key, t_mlx *mlx)
+// {
+// 	//printf("key: %d\n",key);
+// 	if (key == 53)
+// 	{
+// 		mlx_destroy_window(mlx->init, mlx->window);
+// 		exit(0);
+// 	}
+// 	return(0);
+// }
 
 static void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -49,7 +40,7 @@ static void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 void julia(t_mlx *mlx){
 	double z_re, z_img, all, x, y;
 	int i;
-	int max_iterations = 150;
+	int max_iterations = 50;
 	x = 0;
 	t_data data;
 	data = ft_mlx_init_fractol(mlx);
@@ -77,15 +68,11 @@ void julia(t_mlx *mlx){
 				all = z_re * z_re +z_img * z_img;
 				i++;
 			}
-			double color = i % 16 * 0xE12700 + i % 16 * 0xC7D0D1+ i % 16 * 0x484848 ;
-			// double color2 = i % 16 * 0x000000+ i % 16 * 0x7B8181+ i % 16 * 0xF9FEFF;
-		   	
-			if(i < 5)
-				my_mlx_pixel_put(&data, x, y, 0x000000);
-			if(i < 15)
-				my_mlx_pixel_put(&data, x, y, color);
-			else if (i < 150)
-				my_mlx_pixel_put(&data, x, y, 0xFFFFFF);
+				double color  = i % 16 * 0x000000 + i % 16 * 0xECEEF1 + i % 16 * 0x242322;
+            if (i == max_iterations)
+                my_mlx_pixel_put(&data, x, y, 0x000000);
+            else
+                my_mlx_pixel_put(&data, x, y, color);
 			y++;			
 		}
 		x++;
@@ -106,14 +93,3 @@ static t_data ft_mlx_init_fractol(t_mlx *mlx)
 	data.addr = mlx_get_data_addr(mlx->img, &(data.bits_per_pixel), &(data.line_length), &(data.endian));
 	return (data);
 }
-// int main()
-// {
-// 	t_mlx mlx;
-// 	//memset(&mlx, 0, sizeof(mlx));
-// 	//t_data data;
-
-// 	//data = ft_mlx_init_fractol(&mlx);
-// 	julia(&mlx);
-	
-// 	mlx_loop(mlx.ptr);
-// }
