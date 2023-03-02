@@ -15,20 +15,20 @@
 #define W 1000
 #define H 1000
 
-static t_data	ft_mlx_init_fractol(t_mlx *mlx);
-
-static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+t_mlx	*ft_map_init_mandelbrot(t_mlx *mlx)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	mlx->c_re = (mlx->x - W / 2.0) * (4.0 / W);
+	mlx->c_img = (mlx->y - W / 2.0) * (4.0 / W);
+	mlx->z_img = 0;
+	mlx->z_re = 0;
+	mlx->all = mlx->z_re * mlx->z_re + mlx->z_img * mlx->z_img;
+	mlx->i = 0;
+	return (mlx);
 }
+
 void	mandelbrot(t_mlx *mlx)
 {
 	t_data	data;
-	double	z_re2;
-	double	z_img2;
 
 	mlx->max_iterations = 1500;
 	mlx->x = 0;
@@ -38,21 +38,8 @@ void	mandelbrot(t_mlx *mlx)
 		mlx->y = 0;
 		while (mlx->y < 1000)
 		{
-			mlx->c_re = (mlx->x - W / 2.0) * (4.0 / W);
-			mlx->c_img = (mlx->y - W / 2.0) * (4.0 / W);
-			mlx->z_img = 0;
-			mlx->z_re = 0;
-			mlx->all = mlx->z_re * mlx->z_re + mlx->z_img * mlx->z_img;
-			mlx->i = 0;
-			while (mlx->all < 4 && mlx->i < mlx->max_iterations)
-			{
-				z_re2 = mlx->z_re * mlx->z_re;
-				z_img2 = mlx->z_img * mlx->z_img;
-				mlx->z_img = 2 * mlx->z_img * mlx->z_re + mlx->c_img;
-				mlx->z_re = z_re2 - z_img2 + mlx->c_re;
-				mlx->all = mlx->z_re * mlx->z_re + mlx->z_img * mlx->z_img;
-				mlx->i++;
-			}
+			ft_map_init_mandelbrot(mlx);
+			ft_draw(mlx);
 			mlx->color = mlx->i % 16 * 0x000000 + mlx->i % 16 * 0xECEEF1
 				+ mlx->i % 16 * 0x242322;
 			if (mlx->i == mlx->max_iterations)
@@ -64,18 +51,4 @@ void	mandelbrot(t_mlx *mlx)
 		mlx->x++;
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
-}
-
-static t_data	ft_mlx_init_fractol(t_mlx *mlx)
-{
-	t_data	data;
-
-	mlx->width = W;
-	mlx->height = H;
-	mlx->ptr = mlx_init();
-	mlx->win = mlx_new_window(mlx->ptr, mlx->width, mlx->height, "mandelbrot");
-	mlx->img = mlx_new_image(mlx->ptr, mlx->width, mlx->height);
-	data.addr = mlx_get_data_addr(mlx->img, &(data.bits_per_pixel),
-			&(data.line_length), &(data.endian));
-	return (data);
 }

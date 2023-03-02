@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
 typedef struct s_mlx
 {
 	void	*ptr;
@@ -44,7 +45,9 @@ typedef struct s_data
 	int		endian;
 }			t_data;
 
-//void my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int			ft_draw(t_mlx *mlx);
+t_data		ft_mlx_init_fractol(t_mlx *mlx);
 //  static t_data ft_mlx_init_fractol(t_mlx *mlx);
 void		julia(t_mlx *mlx);
 void		mandelbrot(t_mlx *mlx);
