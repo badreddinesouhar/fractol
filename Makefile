@@ -12,7 +12,7 @@
 
 NAME = fractol
 
-SRC = fractol.c mandelbrot.c julia.c fractol_utils.c
+SRC = fractol.c mandelbrot.c julia.c fractol_utils.c libft_fractol_utils.c burning_ship.c zoom_fractal.c
 OBJ = $(SRC:.c=.o)
 
 CC = cc

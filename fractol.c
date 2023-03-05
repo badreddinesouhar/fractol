@@ -12,20 +12,32 @@
 
 #include "fractol.h"
 
-#define W 1000
-#define H 1000
-
 int	main(int argc, char *argv[])
 {
 	t_mlx	mlx;
 
-	if (argc == 2 && atoi(argv[1]) == 1)
-		mandelbrot(&mlx);
-	else if (argc == 4 && atoi(argv[1]) == 2)
+	mlx.zoom = 4.0;
+	if (argc == 2 && ft_atoi(argv[1]) == 1)
 	{
-		mlx.c_img = (double)atof(argv[2]);
-		mlx.c_re = (double)atof(argv[3]);
+		ft_mlx_init_fractol(&mlx);
+		mlx.arg = 1;
+		mandelbrot(&mlx);
+	}
+	else if (argc == 4 && ft_atoi(argv[1]) == 2)
+	{
+		ft_mlx_init_fractol(&mlx);
+		mlx.arg = 2;
+		mlx.c_img = ft_atof(argv[2]);
+		mlx.c_re = ft_atof(argv[3]);
 		julia(&mlx);
 	}
+	else if (argc == 2 && ft_atoi(argv[1]) == 3)
+	{
+		ft_mlx_init_fractol(&mlx);
+		mlx.arg = 3;
+		burning_ship(&mlx);
+	}
+	else 
+		ft_error();
 	mlx_loop(mlx.ptr);
 }

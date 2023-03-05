@@ -12,15 +12,22 @@
 
 #include "fractol.h"
 
-#define W 1000
-#define H 1000
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
+}
+
+int	key_handler(int key, t_mlx *mlx)
+{
+	if (key == 53)
+	{
+		mlx_destroy_window(mlx->ptr, mlx->win);
+		exit(0);
+	}
+	return (0);
 }
 
 int	ft_draw(t_mlx *mlx)
@@ -40,16 +47,12 @@ int	ft_draw(t_mlx *mlx)
 	return (mlx->i);
 }
 
-t_data	ft_mlx_init_fractol(t_mlx *mlx)
+void	ft_mlx_init_fractol(t_mlx *mlx)
 {
-	t_data	data;
-
-	mlx->width = W;
-	mlx->height = H;
+	mlx->w = 1000;
+	mlx->h = 1000;
 	mlx->ptr = mlx_init();
-	mlx->win = mlx_new_window(mlx->ptr, mlx->width, mlx->height, "julia");
-	mlx->img = mlx_new_image(mlx->ptr, mlx->width, mlx->height);
-	data.addr = mlx_get_data_addr(mlx->img, &(data.bits_per_pixel),
-			&(data.line_length), &(data.endian));
-	return (data);
+	mlx->win = mlx_new_window(mlx->ptr, mlx->w, mlx->h, "julia");
+	mlx_key_hook(mlx->win, key_handler, mlx);
+	mlx_mouse_hook(mlx->win, mouse_hook, mlx);
 }

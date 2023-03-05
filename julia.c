@@ -12,23 +12,10 @@
 
 #include "fractol.h"
 
-#define W 1000
-#define H 1000
-
-// int	key_handler(int key, t_mlx *mlx)
-// {
-// 	//printf("key: %d\n",key);
-// 	if (key == 53)
-// 	{
-// 		mlx_destroy_window(mlx->init, mlx->window);
-// 		exit(0);
-// 	}
-// 	return(0);
-// }
 t_mlx	*ft_map_init_julia(t_mlx *mlx)
 {
-	mlx->z_re = (mlx->x - W / 2.0) * (4.0 / W);
-	mlx->z_img = (mlx->y - W / 2.0) * (4.0 / W);
+	mlx->z_re = (mlx->x - mlx->w / 2.0) * (mlx->zoom / mlx->w);
+	mlx->z_img = (mlx->y - mlx->w / 2.0) * (mlx->zoom / mlx->w);
 	mlx->all = mlx->z_re * mlx->z_re + mlx->z_img * mlx->z_img;
 	mlx->i = 0;
 	return (mlx);
@@ -36,11 +23,11 @@ t_mlx	*ft_map_init_julia(t_mlx *mlx)
 
 void	julia(t_mlx *mlx)
 {
-	t_data	data;
-
-	mlx->max_iterations = 250;
+	mlx->img = mlx_new_image(mlx->ptr, mlx->w, mlx->h);
+	mlx->addr = mlx_get_data_addr(mlx->img, &(mlx->bits_per_pixel),
+			&(mlx->line_length), &(mlx->endian));
+	mlx->max_iterations = 1550;
 	mlx->x = 0;
-	data = ft_mlx_init_fractol(mlx);
 	while (mlx->x < 1000)
 	{
 		mlx->y = 0;
@@ -51,9 +38,9 @@ void	julia(t_mlx *mlx)
 			mlx->color = mlx->i % 16 * 0x000000 + mlx->i % 16 * 0xECEEF1
 				+ mlx->i % 16 * 0x242322;
 			if (mlx->i == mlx->max_iterations)
-				my_mlx_pixel_put(&data, mlx->x, mlx->y, 0x000000);
+				my_mlx_pixel_put(mlx, mlx->x, mlx->y, 0x000000);
 			else
-				my_mlx_pixel_put(&data, mlx->x, mlx->y, mlx->color);
+				my_mlx_pixel_put(mlx, mlx->x, mlx->y, mlx->color);
 			mlx->y++;
 		}
 		mlx->x++;
