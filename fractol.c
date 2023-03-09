@@ -12,6 +12,15 @@
 
 #include "fractol.h"
 
+int	ft_error(void)
+{
+	ft_putstr_fd("./fractol 1 ---> to render the mandlebrot set\n", 2);
+	ft_putstr_fd("./fractol 2 a b (a and b int between \
+			-2 & 2) ---> to render the julia set\n", 2);
+	ft_putstr_fd("./fractol 3 ---> to render the burning_ship set\n", 2);
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_mlx	mlx;
@@ -37,7 +46,6 @@ int	main(int argc, char *argv[])
 		mlx.arg = 3;
 		burning_ship(&mlx);
 	}
-	else 
+	else
 		ft_error();
-	mlx_loop(mlx.ptr);
 }

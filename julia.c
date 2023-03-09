@@ -46,4 +46,5 @@ void	julia(t_mlx *mlx)
 		mlx->x++;
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
+	mlx_loop(mlx->ptr);
 }

@@ -54,5 +54,7 @@ int			mouse_hook(int key, int x, int y, t_mlx *mlx);
 void		julia(t_mlx *mlx);
 void		mandelbrot(t_mlx *mlx);
 void		burning_ship(t_mlx *mlx);
+void		ft_putstr_fd(char *s, int fd);
+void		ft_putchar_fd(char c, int fd);
 
 #endif
