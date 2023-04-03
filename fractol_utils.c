@@ -52,7 +52,7 @@ void	ft_mlx_init_fractol(t_mlx *mlx)
 	mlx->w = 1000;
 	mlx->h = 1000;
 	mlx->ptr = mlx_init();
-	mlx->win = mlx_new_window(mlx->ptr, mlx->w, mlx->h, "julia");
+	mlx->win = mlx_new_window(mlx->ptr, mlx->w, mlx->h, "fractol");
 	mlx_key_hook(mlx->win, key_handler, mlx);
 	mlx_mouse_hook(mlx->win, mouse_hook, mlx);
 }
